@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.1 — March 8, 2026
+
+### Changed
+- **Data source switched** from pokemontcg.io API to [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data) static JSON files
+  - No API key needed, no rate limits, no HTTP pagination overhead
+  - Reads `sets/en.json` for set metadata and `ptcgoCode` mapping
+  - Reads `cards/en/{set_id}.json` for card data per set
+  - Filters at both set level (`legalities.standard`) and card level
+- `scripts/fetch_and_categorize_cards.py` fully rewritten for the new data source
+- README updated with new data source references
+- Same CSV output format, same letter-split logic, same file structure — downstream compatibility preserved
+
+---
+
 ## v1.0 — March 8, 2026
 
 ### New
@@ -15,7 +29,6 @@
 
 ### Design decisions
 - Modeled after [MTG-Decks](https://github.com/Celeannora/MTG-Decks) repository structure
-- Card data sourced from [Pokémon TCG API](https://pokemontcg.io/) v2
 - Max file size ≤80KB per CSV for reliable GitHub API access
 - Cards categorized by supertype (Pokémon, Trainer, Energy) instead of MTG types
 - Decklist format uses official PTCGL import syntax
