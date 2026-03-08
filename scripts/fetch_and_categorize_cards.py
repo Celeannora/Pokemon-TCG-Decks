@@ -7,6 +7,13 @@ No API key needed. No rate limits. Faster and more reliable.
 Data source: https://github.com/PokemonTCG/pokemon-tcg-data/tree/master/cards/en
 Set metadata: https://github.com/PokemonTCG/pokemon-tcg-data/blob/master/sets/en.json
 
+IMPORTANT: The legalities.standard field in the upstream JSON data is NOT reliably
+updated after format rotations. This script filters by REGULATION MARK instead,
+which is the authoritative indicator of Standard legality.
+
+Current Standard format: Regulation Mark G and later (G, H, I, J, …)
+Basic Energy cards (from SVE) have no regulation mark and are always legal.
+
 Splits card database by supertype (folder) then first letter of card name.
 Target: each file ~80KB max for reliable GitHub API access by AI tools.
 
@@ -25,14 +32,25 @@ from datetime import datetime
 from typing import List, Dict, Tuple, Optional
 from collections import defaultdict
 
-# ── GitHub raw base URL ──────────────────────────────────────────────────────
+# ── Config ───────────────────────────────────────────────────────────────────
 RAW_BASE = "https://raw.githubusercontent.com/PokemonTCG/pokemon-tcg-data/master"
 SETS_URL = f"{RAW_BASE}/sets/en.json"
 CARDS_DIR = "cards/en"
 
-# ── Output config ────────────────────────────────────────────────────────────
 MAX_FILE_SIZE_BYTES = 80 * 1024  # 80 KB target max per CSV
 OUTPUT_DIR = "card_data"
+
+# Standard-legal regulation marks (G and later).
+# Update this set when a new rotation occurs.
+LEGAL_REG_MARKS = {'G', 'H', 'I', 'J'}
+
+# Sets that contain cards which are ALWAYS Standard-legal regardless of
+# regulation mark (e.g. Basic Energy from SVE have no mark).
+ALWAYS_LEGAL_SETS = {'sve'}
+
+# Only fetch sets from these series (contains all G+ cards).
+# This avoids downloading 100+ old set files that can't have legal cards.
+CANDIDATE_SERIES = {'Scarlet & Violet', 'Mega Evolution'}
 
 CSV_COLUMNS = [
     'name', 'supertype', 'subtypes', 'hp', 'types', 'evolves_from',
@@ -113,6 +131,15 @@ def extract_card(card: Dict, set_name: str, ptcgo_code: str) -> Dict:
     }
 
 
+def is_standard_legal(card: Dict, set_id: str) -> bool:
+    """Determine if a card is Standard-legal based on regulation mark."""
+    # Basic Energy from SVE — always legal, no regulation mark
+    if set_id in ALWAYS_LEGAL_SETS:
+        return True
+    reg_mark = card.get('regulationMark', '')
+    return reg_mark in LEGAL_REG_MARKS
+
+
 # ── CSV writing ──────────────────────────────────────────────────────────────
 
 def estimate_csv_size(cards: List[Dict]) -> int:
@@ -173,6 +200,7 @@ def write_index(stats: List[Dict]):
         f.write("# Card data index\n\n")
         f.write(f"Last updated: {datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}\n\n")
         f.write("Data source: [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data)\n\n")
+        f.write(f"Standard format: Regulation Mark {', '.join(sorted(LEGAL_REG_MARKS))} (and Basic Energy)\n\n")
         f.write("## How to find a card\n\n")
         f.write("**Pattern**: `card_data/{supertype}/{supertype}_{first_letter}.csv`\n\n")
         f.write("**Example**: Charizard ex → `card_data/pokemon/pokemon_c.csv`\n\n")
@@ -219,46 +247,50 @@ def write_index(stats: List[Dict]):
 def main():
     print("=" * 70)
     print("Pokémon TCG Card Fetcher — Static GitHub Data Source")
-    print(f"Source: PokemonTCG/pokemon-tcg-data")
-    print(f"Output: {OUTPUT_DIR}/")
+    print(f"Source : PokemonTCG/pokemon-tcg-data")
+    print(f"Filter : Regulation Mark {', '.join(sorted(LEGAL_REG_MARKS))} + Basic Energy")
+    print(f"Output : {OUTPUT_DIR}/")
     print("=" * 70)
 
     # 1. Fetch set metadata
     print("\nFetching set metadata...")
-    sets = fetch_json(SETS_URL)
+    sets_data = fetch_json(SETS_URL)
     set_map = {}
-    for s in sets:
+    for s in sets_data:
         set_map[s['id']] = {
             'name': s['name'],
+            'series': s.get('series', ''),
             'ptcgo_code': s.get('ptcgoCode', s['id'].upper()),
-            'legalities': s.get('legalities', {}),
         }
-    print(f"  Found {len(sets)} sets")
+    print(f"  Found {len(sets_data)} total sets")
 
-    # 2. Identify Standard-legal sets
-    std_sets = {sid: info for sid, info in set_map.items()
-                if info['legalities'].get('standard') == 'Legal'}
-    print(f"  {len(std_sets)} are Standard-legal")
+    # 2. Identify candidate sets (SV-era, ME-era, and always-legal sets)
+    candidate_sets = {}
+    for sid, info in set_map.items():
+        if info['series'] in CANDIDATE_SERIES or sid in ALWAYS_LEGAL_SETS:
+            candidate_sets[sid] = info
+    print(f"  {len(candidate_sets)} candidate sets to scan (Scarlet & Violet + Mega Evolution + Energy)")
 
-    # 3. Fetch cards for each Standard set
+    # 3. Fetch and filter cards
     all_cards: List[Dict] = []
-    for sid in sorted(std_sets.keys()):
+    for sid in sorted(candidate_sets.keys()):
         url = f"{RAW_BASE}/{CARDS_DIR}/{sid}.json"
         try:
             cards_raw = fetch_json(url)
         except Exception as e:
             print(f"  ⚠ Skipping {sid}: {e}")
             continue
-        info = std_sets[sid]
+        info = candidate_sets[sid]
         count = 0
         for card in cards_raw:
-            leg = card.get('legalities', {})
-            if leg.get('standard') != 'Legal':
+            if not is_standard_legal(card, sid):
                 continue
             processed = extract_card(card, info['name'], info['ptcgo_code'])
             all_cards.append(processed)
             count += 1
-        print(f"  {sid:<14s} ({info['ptcgo_code']:<6s}) → {count:>4d} Standard-legal cards")
+        total_in_set = len(cards_raw)
+        skipped = total_in_set - count
+        print(f"  {sid:<14s} ({info['ptcgo_code']:<6s}) → {count:>4d} legal, {skipped:>4d} skipped  [{info['name']}]")
 
     print(f"\nTotal Standard-legal cards: {len(all_cards)}")
 
@@ -313,6 +345,7 @@ def main():
     print(f"  Total cards   : {total_cards}")
     print(f"  Largest file  : {max_size:.1f} KB")
     print(f"  Output dir    : {OUTPUT_DIR}/")
+    print(f"  Reg marks     : {', '.join(sorted(LEGAL_REG_MARKS))}")
     print("=" * 70)
 
 
