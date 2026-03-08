@@ -10,7 +10,7 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 - Draw 7 cards as opening hand
 - Place 1 Basic Pokémon face-down as Active, up to 5 on Bench
 - Place top 6 cards face-down as Prize cards
-- Win by taking all 6 Prize cards, or opponent has no Bench Pokémon when Active is KO'd, or opponent cannot draw
+- Win by taking all 6 Prize cards, or opponent has no Bench Pokémon when Active is KO’d, or opponent cannot draw
 
 ---
 
@@ -23,8 +23,8 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 | Basic | Can be played directly from hand; required for game start |
 | Stage 1 | Evolves from a Basic Pokémon |
 | Stage 2 | Evolves from a Stage 1 Pokémon |
-| ex / EX | Gives up 2 Prize cards when KO'd (lowercase ex = current era) |
-| V | Basic; gives up 2 Prize cards when KO'd |
+| ex / EX | Gives up 2 Prize cards when KO’d (lowercase ex = current era) |
+| V | Basic; gives up 2 Prize cards when KO’d |
 | VSTAR | Evolves from V; gives up 2 Prize cards; has VSTAR Power (once per game) |
 | VMAX | Evolves from V; gives up 3 Prize cards |
 | Radiant | Special rarity; only 1 per deck |
@@ -65,7 +65,8 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 
 ## Standard format (current)
 
-- **Regulation Marks**: H and later are Standard-legal
+- **Regulation Marks**: G and later are Standard-legal (G, H, I, J)
+- **Basic Energy**: Always legal regardless of regulation mark
 - **Rotation**: Occurs annually; older regulation marks rotate out
 - **Banned cards**: Check official ban list before building
 
@@ -84,7 +85,7 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 
 ## Prize cards
 
-| Pokémon type | Prizes given up when KO'd |
+| Pokémon type | Prizes given up when KO’d |
 |---|---|
 | Regular Pokémon | 1 |
 | Pokémon ex / EX / V | 2 |
@@ -102,17 +103,23 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 | OBF | Obsidian Flames |
 | MEW | 151 |
 | PAR | Paradox Rift |
+| PAF | Paldean Fates |
 | TEF | Temporal Forces |
 | TWM | Twilight Masquerade |
 | SFA | Shrouded Fable |
 | SCR | Stellar Crown |
 | SSP | Surging Sparks |
 | PRE | Prismatic Evolutions |
-| PFL | Paldean Fates |
+| JTG | Journey Together |
+| DRI | Destined Rivals |
+| BLK | Black Bolt |
+| WHT | White Flare |
+| MEG | Mega Evolution |
+| PFL | Phantasmal Flames |
+| ASC | Ascended Heroes |
 | SVE | Scarlet & Violet Energies |
 | SVP | Scarlet & Violet Promos |
-| CRZ | Crown Zenith |
 
 ---
 
-**Last updated**: March 8, 2026 | **Version**: 1.0
+**Last updated**: March 8, 2026 | **Version**: 1.1
