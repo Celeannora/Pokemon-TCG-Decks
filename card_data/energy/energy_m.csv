@@ -1,0 +1,3 @@
+name,supertype,subtypes,hp,types,evolves_from,abilities,attacks,weaknesses,resistances,retreat_cost,set_code,set_name,number,rarity,regulation_mark,rules
+Medical Energy,Energy,Special,,,,,,,,0,PAR,Paradox Rift,182,Uncommon,G,"As long as this card is attached to a Pokémon, it provides Colorless Energy.  When you attach this card from your hand to 1 of your Pokémon, heal 30 damage from that Pokémon."
+Mist Energy,Energy,Special,,,,,,,,0,TEF,Temporal Forces,161,Uncommon,H,"As long as this card is attached to a Pokémon, it provides Colorless Energy.    Prevent all effects of attacks used by your opponent's Pokémon done to the Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)"
