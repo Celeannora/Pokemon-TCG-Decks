@@ -1,0 +1,30 @@
+Pokémon: 15
+3 Main Attacker ex SET 001
+2 Stage 1 Pokémon SET 002
+3 Basic Pokémon SET 003
+2 Support Pokémon ex SET 004
+1 Radiant Pokémon SET 005
+2 Bench Utility SET 006
+2 Setup Pokémon SET 007
+
+Trainer: 33
+4 Professor's Research SET 190
+3 Iono SET 185
+2 Boss's Orders SET 172
+4 Ultra Ball SET 196
+4 Nest Ball SET 181
+3 Rare Candy SET 191
+2 Switch SET 194
+1 Escape Rope SET 125
+2 Super Rod SET 188
+2 Choice Belt SET 176
+1 Counter Catcher SET 160
+1 ACE SPEC Card SET 150
+2 Lost Vacuum SET 162
+2 Stadium Card SET 170
+
+Energy: 12
+4 Special Energy SET 230
+8 Basic {R} Energy SVE 2
+
+Total Cards: 60
