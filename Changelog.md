@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.2 — March 8, 2026
+
+### Fixed
+- **Critical: Standard legality filter now uses Regulation Mark G+ instead of stale `legalities.standard` field**
+  - The upstream `legalities.standard` in pokemon-tcg-data is NOT updated after format rotations
+  - SWSH-era cards (Reg Mark D/E/F) were incorrectly included as “Standard Legal”
+  - Now filters by `regulationMark ∈ {G, H, I, J}` which is the authoritative indicator
+  - Basic Energy from SVE (no regulation mark) handled as always-legal
+- Only scans Scarlet & Violet + Mega Evolution series sets (avoids downloading 100+ irrelevant old set files)
+- Rules_reference.md corrected from “H and later” to “G and later”
+- Added missing set codes: JTG, DRI, BLK, WHT, MEG, PFL, ASC, PAF
+- README filter description updated to explain why we don’t trust `legalities.standard`
+
+---
+
 ## v1.1 — March 8, 2026
 
 ### Changed
@@ -7,7 +22,6 @@
   - No API key needed, no rate limits, no HTTP pagination overhead
   - Reads `sets/en.json` for set metadata and `ptcgoCode` mapping
   - Reads `cards/en/{set_id}.json` for card data per set
-  - Filters at both set level (`legalities.standard`) and card level
 - `scripts/fetch_and_categorize_cards.py` fully rewritten for the new data source
 - README updated with new data source references
 - Same CSV output format, same letter-split logic, same file structure — downstream compatibility preserved
