@@ -39,6 +39,7 @@ All Standard-legal cards are stored in `card_data/`, organized by supertype and 
 
 **Data source**: [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data) — static JSON files, no API key needed, no rate limits.
 
+- **Standard filter**: Regulation Mark G and later (G, H, I, J) + Basic Energy (always legal)
 - **Path format**: `card_data/{supertype}/{supertype}_{letter}.csv`
 - **Example**: Charizard ex (Pokémon, starts with C) → `card_data/pokemon/pokemon_c.csv`
 - **File size**: Each file targets ≤80KB for reliable GitHub API access
@@ -51,7 +52,7 @@ pip install requests
 python scripts/fetch_and_categorize_cards.py
 ```
 
-The script reads set metadata from `sets/en.json` and card data from `cards/en/{set_id}.json` directly from [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data), filters by `legalities.standard == "Legal"`, and exports letter-split CSVs with full card text (attacks, abilities, weaknesses, resistances, retreat cost, rules).
+The script reads set metadata from `sets/en.json` and card data from `cards/en/{set_id}.json` directly from [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data). It filters by **Regulation Mark** (not the upstream `legalities.standard` field, which is stale after rotations) and exports letter-split CSVs with full card text.
 
 ---
 
@@ -64,7 +65,6 @@ Pokémon: 15
 2 Charizard ex OBF 125
 2 Charmeleon OBF 27
 3 Charmander MEW 4
-1 Radiant Charizard CRZ 20
 ...
 
 Trainer: 33
@@ -104,7 +104,7 @@ Line format: `<count> <card_name> <set_code> <collector_number>`
 
 ## Format supported
 
-- **Standard** (default — full database support, Regulation Mark H and later)
+- **Standard** (default — full database support, Regulation Mark G and later)
 
 Only Standard has full card database support. Expanded and other formats require manual legality verification.
 
@@ -120,6 +120,6 @@ Every card choice is strategically justified. Every matchup consideration is rig
 
 **Maintained by**: Celeannora
 **Last updated**: March 8, 2026
-**Version**: 1.1
+**Version**: 1.2
 **Powered by**: [Perplexity AI](https://www.perplexity.ai)
 **Card data**: [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data)
