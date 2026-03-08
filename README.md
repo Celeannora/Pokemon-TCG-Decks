@@ -23,7 +23,7 @@ Pokemon-TCG-Decks/
 │   ├── trainer/
 │   └── energy/
 ├── scripts/
-│   └── fetch_and_categorize_cards.py   # Regenerates card_data/ from pokemontcg.io API
+│   └── fetch_and_categorize_cards.py   # Regenerates card_data/ from static GitHub data
 ├── Deck_builder_instructions.md        # AI methodology and workflow
 ├── Deck_building_guidelines.md         # Quick reference for AI assistants
 ├── Rules_reference.md                  # Pokémon TCG rules reference
@@ -35,7 +35,9 @@ Pokemon-TCG-Decks/
 
 ## Card database
 
-All Standard-legal cards are stored in `card_data/`, organized by supertype and split by first letter of card name:
+All Standard-legal cards are stored in `card_data/`, organized by supertype and split by first letter of card name.
+
+**Data source**: [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data) — static JSON files, no API key needed, no rate limits.
 
 - **Path format**: `card_data/{supertype}/{supertype}_{letter}.csv`
 - **Example**: Charizard ex (Pokémon, starts with C) → `card_data/pokemon/pokemon_c.csv`
@@ -45,8 +47,11 @@ All Standard-legal cards are stored in `card_data/`, organized by supertype and 
 
 To update after Standard rotation or a new set release:
 ```bash
+pip install requests
 python scripts/fetch_and_categorize_cards.py
 ```
+
+The script reads set metadata from `sets/en.json` and card data from `cards/en/{set_id}.json` directly from [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data), filters by `legalities.standard == "Legal"`, and exports letter-split CSVs with full card text (attacks, abilities, weaknesses, resistances, retreat cost, rules).
 
 ---
 
@@ -115,5 +120,6 @@ Every card choice is strategically justified. Every matchup consideration is rig
 
 **Maintained by**: Celeannora
 **Last updated**: March 8, 2026
-**Version**: 1.0 (Initial release)
+**Version**: 1.1
 **Powered by**: [Perplexity AI](https://www.perplexity.ai)
+**Card data**: [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data)
