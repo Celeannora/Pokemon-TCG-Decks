@@ -2,7 +2,9 @@
 
 ## fetch_and_categorize_cards.py
 
-Fetches all Standard-legal Pokémon TCG cards from the [Pokémon TCG API](https://pokemontcg.io/) (v2) and outputs them as letter-split CSV files in `card_data/`.
+Fetches all Standard-legal Pokémon TCG cards from the [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data) static JSON repository and outputs them as letter-split CSV files in `card_data/`.
+
+> **No API key needed. No rate limits.** Reads static JSON files directly from GitHub.
 
 ### Requirements
 
@@ -15,17 +17,6 @@ pip install requests
 ```bash
 python scripts/fetch_and_categorize_cards.py
 ```
-
-### Optional: API key
-
-Set the `POKEMONTCG_API_KEY` environment variable for higher rate limits:
-
-```bash
-export POKEMONTCG_API_KEY=your-api-key-here
-python scripts/fetch_and_categorize_cards.py
-```
-
-Get a free API key at: https://dev.pokemontcg.io/
 
 ### Output structure
 
@@ -68,12 +59,45 @@ card_data/
 
 ### Filtering
 
-The script queries `legalities.standard:legal` from the API, so only Standard-legal cards are included. After Standard rotation, simply re-run the script to get the updated legal card pool.
+The script filters by **Regulation Mark** (`G`, `H`, `I`, `J`, …) — **not** the `legalities.standard` field, which is stale after rotations. Basic Energy cards from SVE (no regulation mark) are always included.
+
+Only sets from the Scarlet & Violet series and Mega Evolution series are scanned, avoiding 100+ irrelevant older set files.
 
 ### File size
 
 Each CSV file targets ≤80KB for reliable GitHub API access. If a single letter (e.g., Pokémon starting with S) exceeds this, the script automatically splits into `pokemon_s1.csv`, `pokemon_s2.csv`, etc.
 
+### When to re-run
+
+Re-run after any Standard rotation or new set release:
+
+```bash
+python scripts/fetch_and_categorize_cards.py
+```
+
+If new regulation marks are introduced, add them to `LEGAL_REG_MARKS` in the script.
+
 ---
 
-**Data source**: [Pokémon TCG API](https://pokemontcg.io/) v2
+## validate_deck.py
+
+Validates a PTCGL-format `decklist.txt` file for legality and format compliance.
+
+### Usage
+
+```bash
+python scripts/validate_deck.py Decks/2026-03-10_Charizard_ex/decklist.txt
+```
+
+### Checks performed
+
+- Exactly 60 cards total
+- No more than 4 copies of any non-Basic-Energy card
+- Section totals match actual card counts
+- Valid PTCGL line format (`<count> <name> <set_code> <number>`)
+- ACE SPEC violations (more than 1 ACE SPEC card)
+- Reports pass/fail with detailed error messages
+
+---
+
+**Data source**: [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data)

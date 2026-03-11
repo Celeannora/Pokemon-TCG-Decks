@@ -22,13 +22,16 @@ Files are ≤80KB. Open the specific file you need — do not scan all files.
 ## Deck construction checklist
 
 - [ ] Card database loaded for relevant supertypes
-- [ ] Format legality verified for every card (Standard — Regulation Mark H+)
+- [ ] Format legality verified for every card (Standard — Regulation Mark G+)
 - [ ] Exactly 60 cards confirmed
 - [ ] No more than 4 copies of any card (except Basic Energy)
+- [ ] ACE SPEC limit respected (max 1 per deck)
+- [ ] Radiant Pokémon limit respected (max 1 per deck)
 - [ ] Energy line math validated
 - [ ] Evolution lines have proper counts
 - [ ] Minimum 3 weaknesses identified
 - [ ] Decklist is valid PTCGL import format
+- [ ] `python scripts/validate_deck.py <path/to/decklist.txt>` passes
 - [ ] Deck saved to `Decks/YYYY-MM-DD_Archetype_Name/`
 
 ---
@@ -62,7 +65,8 @@ The last two tokens on a card line are **always** the set code and collector num
 | Max copies per card | 4 (by name, except Basic Energy) |
 | Basic Energy | Unlimited copies |
 | Prism Star / ACE SPEC | 1 per deck |
-| Format | Standard (Regulation Mark H+) |
+| Radiant Pokémon | 1 per deck |
+| Format | Standard (Regulation Mark G+) |
 
 ---
 
@@ -79,6 +83,19 @@ The last two tokens on a card line are **always** the set code and collector num
 
 ---
 
+## Prize cards reference
+
+| Pokémon type | Prizes given up when KO'd |
+|---|---|
+| Regular Pokémon | 1 |
+| Pokémon ex / EX / V | 2 |
+| VSTAR | 2 |
+| VMAX | 3 |
+| Radiant | 1 |
+| Tera Pokémon ex | 2 |
+
+---
+
 ## File naming conventions
 
 | Folder / file | Purpose |
@@ -90,6 +107,8 @@ The last two tokens on a card line are **always** the set code and collector num
 | `Deck_building_guidelines.md` | This file |
 | `Rules_reference.md` | Pokémon TCG rules reference |
 | `Changelog.md` | Project change history |
+| `scripts/fetch_and_categorize_cards.py` | Regenerates card_data/ from static GitHub data |
+| `scripts/validate_deck.py` | Validates a decklist.txt for legality |
 
 ---
 
@@ -114,4 +133,4 @@ Decks/
 
 ---
 
-**Last updated**: March 8, 2026 | **Version**: 1.0
+**Last updated**: March 10, 2026 | **Version**: 1.1
