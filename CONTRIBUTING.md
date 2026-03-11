@@ -10,7 +10,7 @@ Thank you for your interest in contributing! This repository uses an AI-assisted
 - **Deck improvements** — Update an existing deck's analysis or matchup guide
 - **Card database updates** — Run `scripts/fetch_and_categorize_cards.py` after a new set releases
 - **Documentation fixes** — Typos, corrections, clarifications
-- **Script improvements** — Enhancements to the fetch/categorize script or new utility scripts
+- **Script improvements** — Enhancements to the fetch/categorize script, validate_deck.py, or new utility scripts
 
 ---
 
@@ -22,7 +22,11 @@ Thank you for your interest in contributing! This repository uses an AI-assisted
    - `analysis.md` — card-by-card reasoning, matchup table, weaknesses
    - `matchup_guide.md` — game plan per major matchup
 3. Verify every card is Standard-legal (Regulation Mark G or later)
-4. Verify the decklist imports cleanly into Pokémon TCG Live
+4. Run the validator and confirm it passes:
+   ```bash
+   python scripts/validate_deck.py Decks/YYYY-MM-DD_Archetype_Name/decklist.txt
+   ```
+5. Verify the decklist imports cleanly into Pokémon TCG Live
 
 ---
 
@@ -46,7 +50,11 @@ See [README.md](README.md) for the full PTCGL decklist format.
 
 - Follow PEP 8
 - Add docstrings to new functions
-- Test locally: `python scripts/fetch_and_categorize_cards.py`
+- Test locally:
+  ```bash
+  python scripts/fetch_and_categorize_cards.py
+  python scripts/validate_deck.py Decks/<any_deck>/decklist.txt
+  ```
 - Do not commit the `card_data/` directory after a local test run unless it's a legitimate database update
 
 ---

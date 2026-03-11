@@ -16,6 +16,7 @@
 - [ ] Decklist is exactly 60 cards
 - [ ] All cards are Standard-legal (Regulation Mark G+)
 - [ ] All cards include correct set code and collector number
+- [ ] `python scripts/validate_deck.py <path>` passes with no errors
 - [ ] Decklist imports cleanly into Pokémon TCG Live
 - [ ] `analysis.md` includes at least 3 identified weaknesses
 - [ ] `matchup_guide.md` covers the top 5 meta archetypes
