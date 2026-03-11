@@ -1,81 +1,95 @@
-# [Archetype Name] — Deck Analysis
+# [Archetype Name] — Analysis (Standard, Regulation Mark G+)
 
-**Format**: Standard (Regulation Mark G+)
-**Date**: YYYY-MM-DD
-**Archetype**: <!-- e.g. Charizard ex / Pidgeot ex -->
-**Win condition**: <!-- e.g. One-shot attackers powered by Energy acceleration -->
+> Replace all bracketed placeholders. Delete this line before submitting.
 
 ---
 
-## Executive summary
+## 1. Executive summary
 
-<!-- 2–3 sentences: what the deck does, how it wins, format legality confirmation -->
+- **Archetype**: [e.g. Charizard ex / Pidgeot ex]
+- **Win condition**: [One sentence describing how this deck wins]
+- **Primary attacker**: [Card name, set code, number]
+- **Format legality**: Confirmed Standard-legal — all cards Regulation Mark G or later
+- **Expected prize trade**: [e.g. 2-2-2 or 3-2 prize trade]
 
 ---
 
-## Card-by-card breakdown
+## 2. Card-by-card breakdown
 
 ### Pokémon
 
-<!-- For each card: why this count, what it does, alternatives considered -->
+| Card | Qty | Role | Alternatives considered |
+|------|-----|------|------------------------|
+| [Name] SET ### | [n] | [role] | [what was cut and why] |
 
 ### Trainers
 
-<!-- Supporters, Items, Tools, Stadiums — justify each slot -->
+| Card | Qty | Role | Alternatives considered |
+|------|-----|------|------------------------|
+| [Name] SET ### | [n] | [role] | [what was cut and why] |
 
 ### Energy
 
-<!-- Justify type and count for each energy -->
+| Card | Qty | Role |
+|------|-----|------|
+| [Name] SET ### | [n] | [role] |
 
 ---
 
-## Energy line analysis
+## 3. Energy line analysis
 
-- Types required:
-- Acceleration available:
-- Total energy: X (Y Basic, Z Special)
-- Can attack by turn 2: Yes / No
-
----
-
-## Trainer engine analysis
-
-- Draw/search:
-- Recovery:
-- Utility/disruption:
+- **Type requirements**: [list attackers and their costs]
+- **Acceleration**: [how does this deck accelerate energy?]
+- **Turn 2 attack feasibility**: [probability of attacking turn 2]
+- **Total energy count**: [n] ([justified here])
 
 ---
 
-## Evolution line math
+## 4. Trainer engine analysis
 
-<!-- If applicable: opening hand probability, Rare Candy analysis, search count -->
-
----
-
-## Matchup table
-
-| Archetype | Estimated win rate | Key cards | Notes |
-|---|---|---|---|
-| <!-- e.g. Gardevoir ex --> | <!-- e.g. 55% --> | | |
+- **Draw engine**: [cards and counts]
+- **Search**: [balls, etc.]
+- **Recovery**: [Super Rod, Pal Pad, etc.]
+- **Utility / switching**: [Switch, Escape Rope, etc.]
+- **Disruption**: [Boss's Orders, Iono, etc.]
 
 ---
 
-## Weaknesses and mitigations
+## 5. Evolution line math
 
-1. **Weakness**: <!-- description --> — **Mitigation**: <!-- description -->
-2. **Weakness**: <!-- description --> — **Mitigation**: <!-- description -->
-3. **Weakness**: <!-- description --> — **Mitigation**: <!-- description -->
+*Skip if Basic-only deck.*
 
----
-
-## Prize mapping considerations
-
-<!-- Which cards are catastrophic if prized? How does the deck recover? -->
+- **Line**: [e.g. 4-2-3 Charizard ex with 4 Rare Candy]
+- **Consistency**: [probability of hitting Stage 2 by turn X]
+- **Search redundancy**: [how evolution pieces are found]
 
 ---
 
-## Database verification
+## 6. Matchup table
+
+| Opponent archetype | Est. win rate | Notes |
+|--------------------|--------------|-------|
+| [Archetype] | [%] | [key factor] |
+
+---
+
+## 7. Weaknesses and mitigations
+
+1. **[Weakness 1]**: [mitigation]
+2. **[Weakness 2]**: [mitigation]
+3. **[Weakness 3]**: [mitigation]
+
+---
+
+## 8. Prize mapping considerations
+
+- [Key cards that change the game plan if prized]
+- [Mulligan / prize-out risk assessment]
+
+---
+
+## 9. Database verification status
 
 - [ ] All cards verified against `card_data/` CSV files
-- [ ] All regulation marks confirmed G+
-- [ ] Set codes and numbers confirmed
+- [ ] All cards confirmed Regulation Mark G or later
+- [ ] `scripts/validate_deck.py` passed

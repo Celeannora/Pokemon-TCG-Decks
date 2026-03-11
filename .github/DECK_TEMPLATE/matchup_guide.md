@@ -1,49 +1,57 @@
 # [Archetype Name] — Matchup Guide
 
-**Format**: Standard | **Date**: YYYY-MM-DD
+> Replace all bracketed placeholders. Delete this line before submitting.
 
 ---
 
-## [Archetype 1 — e.g. Gardevoir ex]
+## How to use this guide
 
-**Estimated win rate**: XX%
+For each matchup: identify their key threat, your Boss's Orders target, and the critical turn where the game is decided.
+
+---
+
+## [Opponent Archetype 1]
+
+**Estimated win rate**: [%]
 
 **Key threats**:
-- <!-- What does this deck do that hurts you? -->
+- [What they do that hurts you]
 
-**Boss's Orders / Counter Catcher targets**:
-- <!-- Which Pokémon to drag up and KO -->
+**Boss's Orders targets**:
+- [Priority KO target and why]
 
 **Game plan**:
-- *Early*: <!-- -->
-- *Mid*: <!-- -->
-- *Late*: <!-- -->
+- *Early*: [turns 1–2]
+- *Mid*: [turns 3–5]
+- *Late*: [turns 6+]
 
-**Critical turns**: Turn X — <!-- what must happen -->
+**Critical turn**: [Turn X — what must happen]
 
-**Cards that win this matchup**: <!-- -->
-**Cards that lose this matchup**: <!-- -->
-
----
-
-## [Archetype 2]
-
-<!-- Repeat structure above -->
+**Cards that win this matchup**: [card names]
+**Cards that lose this matchup**: [card names or situations]
 
 ---
 
-## [Archetype 3]
+## [Opponent Archetype 2]
 
-<!-- Repeat structure above -->
+**Estimated win rate**: [%]
+
+**Key threats**:
+- [What they do that hurts you]
+
+**Boss's Orders targets**:
+- [Priority KO target and why]
+
+**Game plan**:
+- *Early*: [turns 1–2]
+- *Mid*: [turns 3–5]
+- *Late*: [turns 6+]
+
+**Critical turn**: [Turn X — what must happen]
+
+**Cards that win this matchup**: [card names]
+**Cards that lose this matchup**: [card names or situations]
 
 ---
 
-## [Archetype 4]
-
-<!-- Repeat structure above -->
-
----
-
-## [Archetype 5]
-
-<!-- Repeat structure above -->
+*Add one section per major meta archetype (minimum 5).*

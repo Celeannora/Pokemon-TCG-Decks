@@ -1,32 +1,37 @@
 ---
 name: Deck Improvement
-about: Suggest improvements to an existing deck's list, analysis, or matchup guide
-title: '[IMPROVEMENT] '
+about: Suggest improvements to an existing decklist or analysis
+title: '[DECK IMPROVEMENT] '
 labels: deck-improvement
 assignees: ''
 ---
 
-## Deck improvement
+## Deck to improve
 
-**Deck**
-<!-- Folder name, e.g. `Decks/2026-03-08_Dragapult_ex/` -->
+**Deck folder / name**
+<!-- e.g., Decks/2026-03-08_Dragapult_ex -->
 
-**Type of improvement**
-- [ ] Card swap (replace one or more cards)
-- [ ] Energy line adjustment
-- [ ] Trainer engine tweak
-- [ ] Analysis update (matchup assessment, card reasoning)
-- [ ] Matchup guide update
-- [ ] Other
+**Current version date**
+<!-- YYYY-MM-DD -->
 
-**Proposed change**
-<!-- What specifically would you change? e.g. "-1 Switch +1 Escape Rope" -->
+---
 
-**Reasoning**
-<!-- Why is this change an improvement? Reference tournament results, card synergies, or matchup data if possible. -->
+## Proposed changes
 
-**Evidence / sources**
-<!-- Limitless TCG results, PTCGL win rate data, official rulings, etc. -->
+**Card swaps / count changes**
+<!-- List specific changes: e.g. "-1 Switch, +1 Escape Rope" -->
 
-**Impact on matchups**
-<!-- Which matchups improve or worsen? -->
+**Rationale**
+<!-- Why does this improve the deck? Matchup impact, consistency, meta shift? -->
+
+---
+
+## Evidence
+
+<!-- Tournament results, personal testing notes, Limitless TCG links, etc. -->
+
+---
+
+## Meta context
+
+<!-- What is the current meta threat driving this change? -->

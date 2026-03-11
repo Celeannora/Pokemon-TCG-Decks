@@ -1,3 +1,8 @@
+# TEMPLATE ONLY — replace all SET / collector number placeholders with real values.
+# See Deck_builder_instructions.md for the full output format.
+# Required companion files: analysis.md and matchup_guide.md (templates in this folder).
+# Validate before submitting: python scripts/validate_deck.py <path/to/decklist.txt>
+
 Pokémon: 15
 3 Main Attacker ex SET 001
 2 Stage 1 Pokémon SET 002
