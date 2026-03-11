@@ -10,7 +10,7 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 - Draw 7 cards as opening hand
 - Place 1 Basic Pokémon face-down as Active, up to 5 on Bench
 - Place top 6 cards face-down as Prize cards
-- Win by taking all 6 Prize cards, or opponent has no Bench Pokémon when Active is KO’d, or opponent cannot draw
+- Win by taking all 6 Prize cards, or opponent has no Bench Pokémon when Active is KO'd, or opponent cannot draw
 
 ---
 
@@ -23,12 +23,12 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 | Basic | Can be played directly from hand; required for game start |
 | Stage 1 | Evolves from a Basic Pokémon |
 | Stage 2 | Evolves from a Stage 1 Pokémon |
-| ex / EX | Gives up 2 Prize cards when KO’d (lowercase ex = current era) |
-| V | Basic; gives up 2 Prize cards when KO’d |
+| ex / EX | Gives up 2 Prize cards when KO'd (lowercase ex = current era) |
+| V | Basic; gives up 2 Prize cards when KO'd |
 | VSTAR | Evolves from V; gives up 2 Prize cards; has VSTAR Power (once per game) |
 | VMAX | Evolves from V; gives up 3 Prize cards |
-| Radiant | Special rarity; only 1 per deck |
-| Tera | Has Terastal ability; specific interactions |
+| Radiant | Special rarity; only 1 per deck; gives up 1 Prize card |
+| Tera | Has Terastal ability; Tera Pokémon ex give up 2 Prize cards |
 
 ### Trainer
 
@@ -44,7 +44,7 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 
 | Subtype | Description |
 |---|---|
-| Basic | 11 types: Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness, Metal, Dragon, Fairy, Colorless. Unlimited copies per deck |
+| Basic | 9 standard types: Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness, Metal, Colorless. Unlimited copies per deck |
 | Special | Provides multiple types or bonus effects. Max 4 copies per deck (by name) |
 
 ---
@@ -85,12 +85,26 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 
 ## Prize cards
 
-| Pokémon type | Prizes given up when KO’d |
+| Pokémon type | Prizes given up when KO'd |
 |---|---|
 | Regular Pokémon | 1 |
 | Pokémon ex / EX / V | 2 |
+| VSTAR | 2 |
 | VMAX | 3 |
 | Radiant | 1 |
+| Tera Pokémon ex | 2 |
+
+---
+
+## Deck limits
+
+| Rule | Limit |
+|---|---|
+| Deck size | Exactly 60 cards |
+| Any card (by name) | Max 4 copies |
+| Basic Energy | Unlimited |
+| ACE SPEC cards | Max 1 per deck |
+| Radiant Pokémon | Max 1 per deck |
 
 ---
 
@@ -122,4 +136,4 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 
 ---
 
-**Last updated**: March 8, 2026 | **Version**: 1.1
+**Last updated**: March 10, 2026 | **Version**: 1.2
