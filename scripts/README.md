@@ -2,9 +2,11 @@
 
 ## fetch_and_categorize_cards.py
 
-Fetches all Standard-legal Pokémon TCG cards from the [PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data) static JSON repository and outputs them as letter-split CSV files in `card_data/`.
+Fetches all Standard-legal Pokémon TCG cards from the static
+[PokemonTCG/pokemon-tcg-data](https://github.com/PokemonTCG/pokemon-tcg-data)
+repository and outputs them as letter-split CSV files in `card_data/`.
 
-> **No API key needed. No rate limits.** Reads static JSON files directly from GitHub.
+No API key needed. No rate limits.
 
 ### Requirements
 
@@ -17,6 +19,15 @@ pip install requests
 ```bash
 python scripts/fetch_and_categorize_cards.py
 ```
+
+### Filtering
+
+The script filters by **regulation mark**, not by the upstream `legalities.standard`
+field (which is stale after format rotations).
+
+- **Standard-legal**: Regulation Marks G, H, I, J
+- **Always-legal**: Basic Energy from `sve` (no regulation mark)
+- **Series scanned**: Scarlet & Violet + Mega Evolution (avoids downloading 100+ irrelevant old set files)
 
 ### Output structure
 
@@ -54,49 +65,35 @@ card_data/
 | `set_name` | Full set name |
 | `number` | Collector number within set |
 | `rarity` | Card rarity |
-| `regulation_mark` | Letter mark for format legality |
-| `rules` | Special rules text (ex rules, etc.) |
-
-### Filtering
-
-The script filters by **Regulation Mark** (`G`, `H`, `I`, `J`, …) — **not** the `legalities.standard` field, which is stale after rotations. Basic Energy cards from SVE (no regulation mark) are always included.
-
-Only sets from the Scarlet & Violet series and Mega Evolution series are scanned, avoiding 100+ irrelevant older set files.
+| `regulation_mark` | Letter mark for format legality (G, H, I, J, …) |
+| `rules` | Special rules text (ex rules, VSTAR Power, etc.) |
 
 ### File size
 
-Each CSV file targets ≤80KB for reliable GitHub API access. If a single letter (e.g., Pokémon starting with S) exceeds this, the script automatically splits into `pokemon_s1.csv`, `pokemon_s2.csv`, etc.
-
-### When to re-run
-
-Re-run after any Standard rotation or new set release:
-
-```bash
-python scripts/fetch_and_categorize_cards.py
-```
-
-If new regulation marks are introduced, add them to `LEGAL_REG_MARKS` in the script.
+Each CSV file targets ≤80KB for reliable GitHub API access. If a single letter
+(e.g., Pokémon starting with S) exceeds this, the script automatically splits
+into `pokemon_s1.csv`, `pokemon_s2.csv`, etc.
 
 ---
 
 ## validate_deck.py
 
-Validates a PTCGL-format `decklist.txt` file for legality and format compliance.
+Validates a PTCGL-format `decklist.txt` file against Standard deck-building rules.
 
 ### Usage
 
 ```bash
-python scripts/validate_deck.py Decks/2026-03-10_Charizard_ex/decklist.txt
+python scripts/validate_deck.py Decks/2026-03-10_Archetype_Name/decklist.txt
 ```
 
 ### Checks performed
 
 - Exactly 60 cards total
 - No more than 4 copies of any non-Basic-Energy card
-- Section totals match actual card counts
-- Valid PTCGL line format (`<count> <name> <set_code> <number>`)
-- ACE SPEC violations (more than 1 ACE SPEC card)
-- Reports pass/fail with detailed error messages
+- Section totals match card counts
+- `Total Cards:` line matches computed total
+- Valid PTCGL line format (`<count> <name> <SET> <number>`)
+- ACE SPEC violation detection (> 1 total ACE SPEC copy)
 
 ---
 

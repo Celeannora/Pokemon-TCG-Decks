@@ -160,7 +160,7 @@ Identify a minimum of 3 structural weaknesses. If none are found, you have not l
 - [ ] ACE SPEC limit respected (max 1)
 - [ ] Radiant limit respected (max 1)
 - [ ] Decklist is valid PTCGL import format
-- [ ] `python scripts/validate_deck.py <path/to/decklist.txt>` passes with no errors
+- [ ] `scripts/validate_deck.py` passes
 - [ ] Deck saved to `Decks/` with correct folder structure
 
 ---
@@ -232,8 +232,7 @@ For each major matchup:
 4. If database is inaccessible, request card details from the user
 5. Run through all 9 analysis phases
 6. Save to `Decks/` with proper folder structure
-7. Run `python scripts/validate_deck.py <path/to/decklist.txt>` and confirm it passes
-8. Await user feedback and iterate
+7. Await user feedback and iterate
 
 **If database is not accessible**: Request supertype, subtypes, HP, types, attacks, abilities, set code, and collector number from the user. Note in `analysis.md` that legality was user-confirmed.
 
@@ -249,7 +248,6 @@ For each major matchup:
 6. **Reproducibility**: Every decision must be traceable and justified
 7. **Proper file organization**: Always save decks to `Decks/`
 8. **PTCGL compliance**: Every decklist.txt must be directly importable
-9. **Validator**: Always run `validate_deck.py` before marking a deck complete
 
 **Failure is acceptable. Unjustified mediocrity is not.**
 
@@ -257,11 +255,11 @@ For each major matchup:
 
 ## Version history
 
-| Version | Date | Notes |
-|---------|------|-------|
-| 1.0 | 2026-03-08 | Initial release for Pokémon TCG; letter-split card_data/ structure; PTCGL import format |
-| 1.1 | 2026-03-08 | Data source switched to PokemonTCG/pokemon-tcg-data static JSON; no API key needed |
-| 1.2 | 2026-03-08 | Critical fix: legality filter now uses Regulation Mark G+ instead of stale legalities.standard |
-| 1.3 | 2026-03-10 | Fix Reg Mark H→G in Format compliance; add ACE SPEC/Radiant limits; add validate_deck.py to workflow |
+| Version | Date       | Notes                                                          |
+|---------|------------|----------------------------------------------------------------|
+| 1.3     | 2026-03-10 | Aligned all docs to Regulation Mark G+; added ACE SPEC/Radiant limits; validate_deck.py in final checklist |
+| 1.2     | 2026-03-08 | Standard legality filter uses Regulation Mark G+ instead of stale legalities.standard |
+| 1.1     | 2026-03-08 | Switched data source to PokemonTCG/pokemon-tcg-data static JSON |
+| 1.0     | 2026-03-08 | Initial release; letter-split card_data/ structure; PTCGL import format |
 
 **Maintained by**: Celeannora | **AI engine**: Perplexity

@@ -27,8 +27,8 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 | V | Basic; gives up 2 Prize cards when KO'd |
 | VSTAR | Evolves from V; gives up 2 Prize cards; has VSTAR Power (once per game) |
 | VMAX | Evolves from V; gives up 3 Prize cards |
-| Radiant | Special rarity; only 1 per deck; gives up 1 Prize card |
-| Tera | Has Terastal ability; Tera Pokémon ex give up 2 Prize cards |
+| Radiant | Special rarity; only 1 per deck; gives up 1 Prize card when KO'd |
+| Tera | Has Terastal ability; gives up 2 Prize cards when KO'd if it is a Pokémon ex |
 
 ### Trainer
 
@@ -44,7 +44,7 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 
 | Subtype | Description |
 |---|---|
-| Basic | 9 standard types: Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness, Metal, Colorless. Unlimited copies per deck |
+| Basic | 11 types: Grass, Fire, Water, Lightning, Psychic, Fighting, Darkness, Metal, Dragon, Fairy, Colorless. Unlimited copies per deck |
 | Special | Provides multiple types or bonus effects. Max 4 copies per deck (by name) |
 
 ---
@@ -89,22 +89,10 @@ Quick-reference for AI assistants building decks. This is not a complete ruleboo
 |---|---|
 | Regular Pokémon | 1 |
 | Pokémon ex / EX / V | 2 |
-| VSTAR | 2 |
+| Pokémon VSTAR | 2 |
+| Tera Pokémon ex | 2 |
 | VMAX | 3 |
 | Radiant | 1 |
-| Tera Pokémon ex | 2 |
-
----
-
-## Deck limits
-
-| Rule | Limit |
-|---|---|
-| Deck size | Exactly 60 cards |
-| Any card (by name) | Max 4 copies |
-| Basic Energy | Unlimited |
-| ACE SPEC cards | Max 1 per deck |
-| Radiant Pokémon | Max 1 per deck |
 
 ---
 

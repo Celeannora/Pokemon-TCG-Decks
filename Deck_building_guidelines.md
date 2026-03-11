@@ -26,12 +26,12 @@ Files are ≤80KB. Open the specific file you need — do not scan all files.
 - [ ] Exactly 60 cards confirmed
 - [ ] No more than 4 copies of any card (except Basic Energy)
 - [ ] ACE SPEC limit respected (max 1 per deck)
-- [ ] Radiant Pokémon limit respected (max 1 per deck)
+- [ ] Radiant limit respected (max 1 per deck)
 - [ ] Energy line math validated
 - [ ] Evolution lines have proper counts
 - [ ] Minimum 3 weaknesses identified
 - [ ] Decklist is valid PTCGL import format
-- [ ] `python scripts/validate_deck.py <path/to/decklist.txt>` passes
+- [ ] `scripts/validate_deck.py` passes
 - [ ] Deck saved to `Decks/YYYY-MM-DD_Archetype_Name/`
 
 ---
@@ -83,19 +83,6 @@ The last two tokens on a card line are **always** the set code and collector num
 
 ---
 
-## Prize cards reference
-
-| Pokémon type | Prizes given up when KO'd |
-|---|---|
-| Regular Pokémon | 1 |
-| Pokémon ex / EX / V | 2 |
-| VSTAR | 2 |
-| VMAX | 3 |
-| Radiant | 1 |
-| Tera Pokémon ex | 2 |
-
----
-
 ## File naming conventions
 
 | Folder / file | Purpose |
@@ -107,8 +94,8 @@ The last two tokens on a card line are **always** the set code and collector num
 | `Deck_building_guidelines.md` | This file |
 | `Rules_reference.md` | Pokémon TCG rules reference |
 | `Changelog.md` | Project change history |
-| `scripts/fetch_and_categorize_cards.py` | Regenerates card_data/ from static GitHub data |
-| `scripts/validate_deck.py` | Validates a decklist.txt for legality |
+| `scripts/validate_deck.py` | Decklist validator |
+| `scripts/fetch_and_categorize_cards.py` | Card database updater |
 
 ---
 
@@ -132,5 +119,12 @@ Decks/
 4. Note in `analysis.md`: "Card legality user-confirmed"
 
 ---
+
+## Version history
+
+| Version | Date       | Notes |
+|---------|------------|-------|
+| 1.1     | 2026-03-10 | Updated for Regulation Mark G+; added ACE SPEC/Radiant rules; validate_deck.py in checklist |
+| 1.0     | 2026-03-08 | Initial quick-reference for AI assistants |
 
 **Last updated**: March 10, 2026 | **Version**: 1.1
