@@ -4,30 +4,25 @@ Deck Validator — validates a PTCGL-format decklist.txt file.
 
 Usage:
     python scripts/validate_deck.py Decks/2026-03-10_Charizard_ex/decklist.txt
-    python scripts/validate_deck.py Decks/2026-03-10_Charizard_ex/decklist.txt --verbose
 
 Checks:
   - Exactly 60 cards total
   - No more than 4 copies of any non-Basic-Energy card
   - Section totals match card counts
-  - Total Cards line matches actual count
+  - Total Cards: line matches computed total
   - Valid PTCGL line format (<count> <name> <SET> <number>)
-  - ACE SPEC violations (>1 ACE SPEC card in deck)
-  - Radiant Pokémon violations (>1 Radiant in deck)
+  - ACE SPEC violations (>1 total ACE SPEC copy in deck)
 """
 
 import sys
 import re
-import argparse
 from pathlib import Path
 from collections import Counter
 
-# Basic Energy types in current Standard (Dragon and Fairy do NOT have Basic Energy cards)
 BASIC_ENERGY_NAMES = {
     'Grass Energy', 'Fire Energy', 'Water Energy', 'Lightning Energy',
     'Psychic Energy', 'Fighting Energy', 'Darkness Energy', 'Metal Energy',
-    'Colorless Energy',
-    # Symbol variants used in PTCGL import format
+    # With type symbol variants (PTCGL brace notation)
     '{G} Energy', '{R} Energy', '{W} Energy', '{L} Energy',
     '{P} Energy', '{F} Energy', '{D} Energy', '{M} Energy',
     '{C} Energy',
@@ -35,40 +30,36 @@ BASIC_ENERGY_NAMES = {
     'Basic {L} Energy', 'Basic {P} Energy', 'Basic {F} Energy',
     'Basic {D} Energy', 'Basic {M} Energy',
     'Basic Grass Energy', 'Basic Fire Energy', 'Basic Water Energy',
-    'Basic Lightning Energy', 'Basic Psychic Energy', 'Basic Fighting Energy',
-    'Basic Darkness Energy', 'Basic Metal Energy',
+    'Basic Lightning Energy', 'Basic Psychic Energy',
+    'Basic Fighting Energy', 'Basic Darkness Energy', 'Basic Metal Energy',
 }
 
-# Known ACE SPEC cards in Standard (Regulation Mark G+)
-# Update this list as new sets are released.
-ACE_SPEC_CARDS = {
-    # Paradox Rift
-    "Neo Upper Energy", "Awakening Drum", "Maximum Belt",
-    # Temporal Forces
-    "Prime Catcher", "Unfair Stamp", "Master Ball", "Erb's Mischief",
-    # Twilight Masquerade
-    "Hyper Aroma", "Pal Pad (ACE SPEC)",
-    # Shrouded Fable
-    "Dangerous Laser",
-    # Stellar Crown
-    "Counter Catcher (ACE SPEC)", "Sparkling Crystal",
-    # Surging Sparks
-    "Reboot Pod", "Deluxe Bomb",
-    # Prismatic Evolutions
+# Known ACE SPEC card names. Expand as new ACE SPECs are released.
+ACE_SPEC_NAMES = {
+    "Master Ball",
+    "Hero's Cape",
+    "Neo Upper Energy",
+    "Reboot Pod",
+    "Sparkling Crystal",
+    "Prime Catcher",
+    "Unfair Stamp",
+    "Survival Brace",
+    "Maximum Belt",
+    "Deluxe Bomb",
+    "Scoop Up Cyclone",
+    "Hyper Aroma",
     "Brilliant Blender",
-    # Journey Together
-    "Hero's Medal",
-    # Common ACE SPEC names (partial match fallback)
+    "Megaton Blower",
+    "Tera Staple",
+    "Secret Box",
+    "Legacy Energy",
+    "Gold Potion",
+    "Computer Search",
+    "Life Dew",
 }
 
-# Radiant Pokémon keyword — detected via subtype in decklist (name starts with "Radiant")
-# In PTCGL decklist format the card name itself starts with "Radiant"
-def is_radiant(name: str) -> bool:
-    return name.startswith("Radiant ")
-
-def is_ace_spec(name: str) -> bool:
-    """Check if a card is an ACE SPEC by name match."""
-    return name in ACE_SPEC_CARDS
+# Fallback heuristic: if card name contains these strings it is likely ACE SPEC
+ACE_SPEC_KEYWORDS = ['ACE SPEC']
 
 
 def parse_decklist(path: Path):
@@ -84,14 +75,13 @@ def parse_decklist(path: Path):
 
     for lineno, raw in enumerate(lines, 1):
         line = raw.strip()
-        if not line:
+        if not line or line.startswith('#'):
             continue
 
         # Section header: "Pokémon: 15" or "Trainer: 33" or "Energy: 12"
-        m = re.match(r'^(Pok[\u00e9e]mon|Trainer|Energy):\s*(\d+)$', line, re.IGNORECASE)
+        m = re.match(r'^(Pok[\xe9e]mon|Trainer|Energy):\s*(\d+)$', line, re.IGNORECASE)
         if m:
-            key = m.group(1).lower()
-            key = re.sub(r'[\u00e9e]', 'e', key)
+            key = m.group(1).lower().replace('\xe9', 'e')
             if 'pok' in key:
                 key = 'pokemon'
             current_section = key
@@ -126,7 +116,7 @@ def parse_decklist(path: Path):
     return sections, section_totals, declared_total, errors, warnings
 
 
-def validate(path_str: str, verbose: bool = False):
+def validate(path_str: str):
     path = Path(path_str)
     if not path.exists():
         print(f"ERROR: File not found: {path}")
@@ -150,12 +140,11 @@ def validate(path_str: str, verbose: bool = False):
     status = '\u2705' if total == 60 else '\u274c'
     print(f"\n{status} Total cards: {total} / 60")
 
-    # Total Cards line check
+    # Total Cards: header cross-check
     if declared_total is not None and declared_total != total:
-        errors.append(f"'Total Cards: {declared_total}' line disagrees with actual count ({total})")
-        print(f"  \u274c Total Cards line says {declared_total} but actual count is {total}")
-    elif declared_total is None:
-        warnings.append("No 'Total Cards:' line found")
+        msg = f"Total Cards: line declares {declared_total} but counted {total}"
+        errors.append(msg)
+        print(f"  \u274c {msg}")
 
     # Section totals
     for sec, cards in sections.items():
@@ -183,47 +172,22 @@ def validate(path_str: str, verbose: bool = False):
 
     # ACE SPEC check
     print("\nACE SPEC check:")
-    ace_specs_in_deck = [(name, count) for name, count in card_counts.items() if is_ace_spec(name)]
-    total_ace_spec_copies = sum(count for _, count in ace_specs_in_deck)
-    if total_ace_spec_copies > 1:
-        errors.append(f"ACE SPEC violation: {total_ace_spec_copies} ACE SPEC cards in deck (max 1)")
-        for name, count in ace_specs_in_deck:
-            print(f"  \u274c {count}x {name} (ACE SPEC)")
-    elif ace_specs_in_deck:
-        for name, count in ace_specs_in_deck:
-            print(f"  \u2705 {count}x {name} (ACE SPEC — within limit)")
+    ace_spec_total = 0
+    ace_spec_found = []
+    for name, count in card_counts.items():
+        is_ace = (name in ACE_SPEC_NAMES or
+                  any(k.lower() in name.lower() for k in ACE_SPEC_KEYWORDS))
+        if is_ace:
+            ace_spec_total += count
+            ace_spec_found.append((name, count))
+    if ace_spec_total > 1:
+        msg = (f"ACE SPEC violation: {ace_spec_total} total ACE SPEC copies "
+               f"({', '.join(f'{c}x {n}' for n, c in ace_spec_found)})")
+        errors.append(msg)
+        print(f"  \u274c {msg}")
     else:
-        print(f"  \u2705 No ACE SPEC cards")
-
-    # Radiant check
-    print("\nRadiant Pokémon check:")
-    radiant_cards = [(name, count) for name, count in card_counts.items() if is_radiant(name)]
-    total_radiant = sum(count for _, count in radiant_cards)
-    if total_radiant > 1:
-        errors.append(f"Radiant violation: {total_radiant} Radiant Pokémon in deck (max 1)")
-        for name, count in radiant_cards:
-            print(f"  \u274c {count}x {name} (Radiant)")
-    elif radiant_cards:
-        for name, count in radiant_cards:
-            print(f"  \u2705 {count}x {name} (Radiant — within limit)")
-    else:
-        print(f"  \u2705 No Radiant Pokémon")
-
-    # Verbose: full card list
-    if verbose:
-        print("\nFull card list:")
-        for sec in ('pokemon', 'trainer', 'energy'):
-            cards = sections[sec]
-            if cards:
-                print(f"  [{sec.capitalize()}]")
-                for entry in cards:
-                    print(f"    {entry['qty']}x {entry['name']} {entry['set_code']} {entry['number']}")
-
-    # Warnings
-    if warnings:
-        print("\nWarnings:")
-        for w in warnings:
-            print(f"  \u26a0\ufe0f  {w}")
+        label = f" ({ace_spec_found[0][0]})" if ace_spec_found else " (none)"
+        print(f"  \u2705 ACE SPEC limit respected{label}")
 
     # Summary
     print(f"\n{'='*55}")
@@ -241,13 +205,7 @@ def validate(path_str: str, verbose: bool = False):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
-        description='Validate a PTCGL-format decklist.txt file.'
-    )
-    parser.add_argument('decklist', help='Path to the decklist.txt file')
-    parser.add_argument(
-        '--verbose', '-v', action='store_true',
-        help='Print full card list during validation'
-    )
-    args = parser.parse_args()
-    validate(args.decklist, verbose=args.verbose)
+    if len(sys.argv) < 2:
+        print("Usage: python scripts/validate_deck.py <path/to/decklist.txt>")
+        sys.exit(1)
+    validate(sys.argv[1])
