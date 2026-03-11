@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.3 — March 10, 2026
+
+### Changed
+- Aligned all documentation on Standard legality to Regulation Mark G+ (was inconsistently H+ in some files)
+- `Deck_builder_instructions.md`: updated Format compliance section to G+; added ACE SPEC and Radiant limits; added v1.1/v1.2 to version history; added validate_deck.py to final checklist
+- `Deck_building_guidelines.md`: fixed H+ → G+ in checklist; added Radiant rule to deck rules table; added validate_deck.py to checklist and file naming table; added version history
+- `Rules_reference.md`: added VSTAR and Tera ex rows to Prize cards table; clarified Radiant prize count in subtype table
+- `scripts/README.md`: fully rewritten to reflect static JSON data source, regulation mark filtering, and validate_deck.py documentation
+- `README.md`: added badges, Quick Start section, Scripts section with validate_deck.py; added validate_deck.py to AI assistant workflow
+- `CONTRIBUTING.md`: added validate_deck.py to deck submission guidelines and code quality section; referenced DECK_TEMPLATE
+- `.github/PULL_REQUEST_TEMPLATE.md`: added validate_deck.py checklist item
+- `requirements.txt`: added root-level requirements file (`requests>=2.25`)
+
+---
+
 ## v1.2 — March 8, 2026
 
 ### Fixed
